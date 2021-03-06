@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>Pixi Hello World</title>
+        <style>
+            body{
+                margin: 0;
+            }
+
+            canvas{
+                display: block;
+                background: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- following this vid: https://www.youtube.com/watch?v=EDEUsXqPTI0&list=PL08jItIqOb2oGcyrgREbrm_b9OW7TE1ji&index=5 -->
+        <canvas id="mycanvas"></canvas>
+        <script src="pixi.min.js"></script>
+
+        <script type="text/javascript">
+            const canvas = document.getElementById('mycanvas');
+
+            const app = new PIXI.Application({
+                view: canvas,
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+
+            console.log(PIXI.utils.TextureCache);
+
+            let img;
+            let loader = PIXI.Loader.shared;
+            
+            // load textures, fist arg is alias for asset
+            loader.add('teeth', 'sprite.png')
+                .add('wolf','sprite2.png')
+                .load();
+            
+            // setup functions for load events
+            loader.onProgress.add(handleLoadProgress);
+            loader.onLoad.add(handleLoadAsset);
+            loader.onError.add(handleLoadError);
+            loader.onComplete.add(handleLoadComplete);
+
+            function handleLoadProgress(loader, resource) {
+                console.log(loader.progress + "% loaded");
+            }
+            function handleLoadAsset(loader, resource) {
+                console.log("asset loaded " + resource.name);
+            }
+            function handleLoadError() {
+                console.log("load error");
+            }
+            
+            function handleLoadComplete() {
+                let texture = loader.resources['sprite.png'].texture;
+                img = new PIXI.Sprite(texture);
+                img.anchor.set(0.5);
+                app.stage.addChild(img);
+
+                app.ticker.add(animate);
+
+                // after 2 seconds change the image texture
+                setTimeout(() => {
+                    // call new texture using alias 'wolf'
+                    img.texture = loader.resources.wolf.texture;
+                }, 2000)
+            }
+
+            function animate(){
+                img.x = app.renderer.screen.width / 2;
+                img.y = app.renderer.screen.height / 2;
+                img.rotation += 0.05;
+            }
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>Pixi Hello World</title>
+        <style>
+            body{
+                margin: 0;
+            }
+
+            canvas{
+                display: block;
+                background: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 
+            loading dev versions of pixi.js and pixi.js.map
+            for prod use min versions
+         -->
+        <script src="pixi.min.js"></script>
+        <!-- 
+            <script src="pixi.min.js.map"></script> 
+            didn't need this yet...
+        -->
+        <script type="text/javascript">
+            // setup app
+            const app = new PIXI.Application({
+                resizeTo: window
+            });
+            document.body.appendChild(app.view);
+
+            // create sprite by passing img path to Sprite()
+            const sprite1 = new PIXI.Sprite.from('sprite.png');
+            
+            // center the sprite's anchor point
+            // if not set the rotation will look strange, and position will be off-center
+            sprite1.anchor.set(0.5);
+
+            // position sprite center
+            //  make sure x = width & y = height
+            //  no joke I spent over 40 min looking for issues because I thought the sprite didn't load... 
+            //  both values were set to width which put the sprite position below the screen... fml
+            sprite1.x = app.renderer.width / 2;
+            sprite1.y = app.renderer.height / 2;
+
+            // add sprite to stage
+            app.stage.addChild(sprite1);
+
+            // animate the sprite by adding a function to the app.ticker
+            app.ticker.add((delta) => {
+                sprite1.rotation += 0.1 * delta;
+            });
+        </script>
+
+    </body>
+</html>

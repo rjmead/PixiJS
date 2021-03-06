@@ -1,5 +1,3 @@
-# PixiJS
-
 Link to vids:
 https://www.youtube.com/watch?v=eKsTVZKMeuI&list=PL08jItIqOb2oGcyrgREbrm_b9OW7TE1ji&index=2
 
