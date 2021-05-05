@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <title>Pixi Hello World</title>
+        <style>
+            body{
+                margin: 0;
+            }
+
+            canvas{
+                display: block;
+                background: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="mycanvas"></canvas>
+        <script src="pixi.min.js"></script>
+        <script type="text/javascript">
+            const canvas = document.getElementById('mycanvas');
+            
+            const app = new PIXI.Application({
+                view: canvas,
+                width: window.innerWidth,
+                height: window.innerHeight
+            });
+
+            const texture = PIXI.Texture.from('../sprites/KNIGHT-artassets/knightPORTRAIT/knightPORTRAITleft.png');
+            const starTexture = PIXI.Texture.from('../sprites/MAGE-artassets/mageIMPACTeffect/mageIMPACTeffect (5).png')
+            
+            let sprite1,
+                sprite2,
+                sprite3;
+
+            let container = new PIXI.Container();
+            app.stage.addChild(container);
+
+            let sprites = [];
+
+            addSprites();
+
+            app.ticker.add(animate);
+
+            function addSprites() {
+                // create 10 sprites and randomize tint and position
+                for (let i = 0; i < 100; i++){
+                    // let sprite = new PIXI.Sprite(texture);  // knight
+                    let sprite = new PIXI.Sprite(starTexture);
+                    sprite.x = Math.random() * app.renderer.screen.width;
+                    sprite.y = Math.random() * app.renderer.screen.height;
+                    sprite.anchor.set(0.5);
+                    sprite.scale.set(Math.random() * .5 + 0.01);
+                    sprite.tint = Math.random() * 0xffffff;
+                    container.addChild(sprite);
+                    sprites.push(sprite);
+                }
+            }
+
+            let delta = 0;
+
+            function animate() {
+                delta += 0.1;
+
+                // container.y = Math.sin(delta/3) * 10;
+
+                // loop through sprites and vary their alpha delay by dividing delta by position in array (+1 no div by zero)
+                //  also messed with rotation. idek what I'm doing, but I dig it lol
+                for (let i = 0; i < sprites.length; i++) {
+                    let s = sprites[i];
+                    s.alpha = Math.sin(delta / 10 + i);
+                    s.rotation += 0.05 / (i/3) * (i % 2 == 0 ? 1 : -1);
+                }
+
+            }
+
+        </script>
+    </body>
+</html>
