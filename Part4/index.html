@@ -53,7 +53,7 @@
             }
             
             function handleLoadComplete() {
-                let texture = loader.resources['sprite.png'].texture;
+                let texture = loader.resources.teeth.texture;
                 img = new PIXI.Sprite(texture);
                 img.anchor.set(0.5);
                 app.stage.addChild(img);
