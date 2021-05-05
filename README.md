@@ -13,3 +13,13 @@ Additional tutorial links:
 https://github.com/kittykatattack/learningPixi
 
 
+# To Run Locally
+install http-server 
+
+https://www.npmjs.com/package/http-server
+
+cd into root of repo and start the server
+
+open localhost:port/Part5
+
+each part has its own index.html so each one can be viewed on the same server by changing the url
